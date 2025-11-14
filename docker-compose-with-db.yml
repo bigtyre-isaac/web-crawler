@@ -1,0 +1,29 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: crawler_db
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: crawlerdb
+      MYSQL_USER: crawler
+      MYSQL_PASSWORD: crawlerpass
+    volumes:
+      - db_data:/var/lib/mysql
+      # Optional: auto-create schema from your schema.sql file in this folder
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    ports:
+      - "3306:3306"
+
+  crawler:
+    build: .
+    container_name: site_crawler
+    #depends_on:
+    #  - db
+    env_file: .env
+      
+    # Runs once and exits after crawl
+    restart: "no"
+
+volumes:
+  db_data:
