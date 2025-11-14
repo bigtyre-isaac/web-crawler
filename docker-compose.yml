@@ -4,6 +4,8 @@ services:
     container_name: site_crawler
     env_file: .env
     restart: "no"
+    depends_on:
+      - testsite
 
   testsite:
     build:
@@ -12,7 +14,6 @@ services:
     ports:
       - "8089:80"
     restart: unless-stopped
-
 
 volumes:
   db_data:
