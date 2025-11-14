@@ -1,0 +1,10 @@
+services:
+  testsite:
+    build:
+      context: ./test
+    container_name: testsite
+    ports:
+      - "8089:80"
+    restart: unless-stopped
+    volumes:
+      - ./test/public:/usr/share/caddy:ro

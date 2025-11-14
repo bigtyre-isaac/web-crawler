@@ -1,0 +1,18 @@
+services:
+  crawler:
+    build: .
+    container_name: site_crawler
+    env_file: .env
+    restart: "no"
+
+  testsite:
+    build:
+      context: ./test
+    container_name: testsite
+    ports:
+      - "8089:80"
+    restart: unless-stopped
+
+
+volumes:
+  db_data:
